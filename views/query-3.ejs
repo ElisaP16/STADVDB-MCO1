@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Slice SQL query dimensions and results.">
+    <title>Slice — OLAP Queries</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="workspace">
+        <div class="detail-page">
+          <a class="back-link" href="index.html">← Back to all queries</a>
+          <header class="detail-heading">
+            <span class="query-icon emerald">&lt;/&gt;</span>
+            <div><p class="eyebrow">QUERY 3</p><h1>Slice</h1><p class="heading-copy">Fix transaction type to credit or debit and inspect the remaining dimensions.</p></div>
+          </header>
+          <section class="detail-section">
+            <div class="section-heading"><span class="section-number">01</span><div><h2>Query setup</h2><p>Choose the transaction type passed into the query.</p></div></div>
+            <div class="slice-toggle" role="tablist" aria-label="Transaction type">
+              <button class="active" data-type="credit" role="tab" aria-selected="true">Credit transactions</button>
+              <button data-type="debit" role="tab" aria-selected="false">Debit transactions</button>
+            </div>
+            <div class="results-wrap empty-results slice-output active" data-output="credit" role="tabpanel" aria-label="Credit transaction results"><span class="empty-mark">∅</span><strong>Credit slice selected</strong><p>Results will contain year, district name, and transaction count.</p></div>
+            <div class="results-wrap empty-results slice-output" data-output="debit" role="tabpanel" aria-label="Debit transaction results"><span class="empty-mark">∅</span><strong>Debit slice selected</strong><p>Results will contain year, district name, and transaction count.</p></div>
+          </section>
+        </div>
+      </section>
+    </main>
+    <script>
+      const typeButtons = document.querySelectorAll(".slice-toggle button");
+      const outputs = document.querySelectorAll(".slice-output");
+      typeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          typeButtons.forEach((item) => {
+            const selected = item === button;
+            item.classList.toggle("active", selected);
+            item.setAttribute("aria-selected", String(selected));
+          });
+          outputs.forEach((output) => {
+            output.classList.toggle("active", output.dataset.output === button.dataset.type);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
