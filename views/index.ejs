@@ -1,113 +1,194 @@
 <!doctype html>
+
 <html lang="en">
+
   <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore four multidimensional SQL query patterns.">
+
+    <meta name="description" content="Explore three multidimensional SQL query patterns.">
+
     <title>OLAP Queries</title>
+
     <link rel="stylesheet" href="/css/styles.css">
+
   </head>
+
   <body>
+
     <main class="shell">
+
       <section class="workspace">
+
         <div class="content">
+
           <header class="heading-row">
+
             <div>
+
               <p class="eyebrow">DATABASE SYSTEMS PROJECT</p>
+
               <h1>OLAP Queries</h1>
+
             </div>
+
           </header>
 
-          <div class="main-grid" data-selected-query="1">
+
+
+          <div class="main-grid main-grid--home" data-selected-query="2">
+
             <section class="query-list" aria-label="SQL query templates">
-              <a class="query-card rollup-card" data-query="1" href="/query-1">
-                <span class="query-icon violet">&lt;/&gt;</span>
-                <h2>Roll-up</h2>
-                <p>Group district-level transactions into regional totals.</p>
-              </a>
+
               <a class="query-card drill-card" data-query="2" href="/query-2">
+
                 <span class="query-icon blue">&lt;/&gt;</span>
-                <h2>Drill Down</h2>
+
+                <h2>Drill Down and Roll-up</h2>
+
                 <p>Explore transaction totals from years down to individual weekdays.</p>
+
               </a>
+
               <a class="query-card slice-card" data-query="3" href="/query-3">
+
                 <span class="query-icon emerald">&lt;/&gt;</span>
+
                 <h2>Slice</h2>
+
                 <p>Fix transaction type to credit or debit and inspect the remaining dimensions.</p>
+
               </a>
+
               <a class="query-card dice-card" data-query="4" href="/query-4">
+
                 <span class="query-icon amber">&lt;/&gt;</span>
+
                 <h2>Dice</h2>
+
                 <p>Filter a sub-cube by two years, two districts, and two transaction types.</p>
+
               </a>
+
             </section>
 
+
+
             <aside class="preview">
+
               <div class="preview-header">
+
                 <span>PREVIEW</span>
-                <h2 class="preview-title preview-rollup">Roll-up</h2>
-                <h2 class="preview-title preview-drill">Drill Down</h2>
+
+                <h2 class="preview-title preview-drill">Drill Down and Roll-up</h2>
+
                 <h2 class="preview-title preview-slice">Slice</h2>
+
                 <h2 class="preview-title preview-dice">Dice</h2>
+
               </div>
+
               <div class="preview-body">
-                <div class="static-summary preview-rollup">
-                  <div class="preview-tags"><span>Query 1</span><span>Roll-up</span></div>
-                  <p>Group district-level transactions into regional totals.</p>
-                  <div class="results-summary">
-                    <span class="results-label">QUERY SUMMARY</span><h3>What Roll-up does</h3>
-                    <p>Roll-up aggregates detailed data into higher-level summaries by moving up a dimension hierarchy.</p>
-                    <div class="objective-summary"><span>OBJECTIVE</span><p>Compare the total volume of transactions across Czech regions.</p></div>
-                  </div>
-                </div>
+
                 <div class="static-summary preview-drill">
-                  <div class="preview-tags"><span>Query 2</span><span>Drill Down</span></div>
+
+                  <div class="preview-tags"><span>Operation 1 and 2</span><span>Drill Down and Roll-up</span></div>
+
                   <p>Explore transaction totals from years down to individual weekdays.</p>
+
                   <div class="results-summary">
-                    <span class="results-label">QUERY SUMMARY</span><h3>What Drill Down does</h3>
-                    <p>Drill down moves from a summarized view into increasingly detailed levels of a dimension.</p>
+
+                    <span class="results-label">QUERY SUMMARY</span><h3>What Drill Down and Roll-up does</h3>
+
+                    <p>Drill down moves from a summarized view into increasingly detailed levels of a dimension. Roll-up does the opposite and moves up the hierarchy of the data warehouse.</p>
+
                     <div class="objective-summary"><span>OBJECTIVE</span><p>Reveal patterns hidden inside yearly totals by increasing the level of time detail.</p></div>
+
                   </div>
+
                 </div>
+
                 <div class="static-summary preview-slice">
-                  <div class="preview-tags"><span>Query 3</span><span>Slice</span></div>
+
+                  <div class="preview-tags"><span>Operation 3</span><span>Slice</span></div>
+
                   <p>Fix transaction type to credit or debit and inspect the remaining dimensions.</p>
+
                   <div class="results-summary">
+
                     <span class="results-label">QUERY SUMMARY</span><h3>What Slice does</h3>
+
                     <p>Slice selects one value from a dimension to create a focused subset of the data cube.</p>
+
                     <div class="objective-summary"><span>OBJECTIVE</span><p>Compare where and when credit or debit transactions occur.</p></div>
+
                   </div>
+
                 </div>
+
                 <div class="static-summary preview-dice">
-                  <div class="preview-tags"><span>Query 4</span><span>Dice</span></div>
+
+                  <div class="preview-tags"><span>Operation 4</span><span>Dice</span></div>
+
                   <p>Filter a sub-cube by two years, two districts, and two transaction types.</p>
+
                   <div class="results-summary">
+
                     <span class="results-label">QUERY SUMMARY</span><h3>What Dice does</h3>
+
                     <p>Dice filters across multiple dimensions to produce a smaller, targeted sub-cube of data.</p>
+
                     <div class="objective-summary"><span>OBJECTIVE</span><p>Compare a tightly defined set of transaction groups across time, place, and type.</p></div>
+
                   </div>
+
                 </div>
+
               </div>
+
               <div class="preview-footer">
-                <a class="primary-link preview-rollup" href="/query-1">Show Results</a>
+
                 <a class="primary-link preview-drill" href="/query-2">Show Results</a>
+
                 <a class="primary-link preview-slice" href="/query-3">Show Results</a>
+
                 <a class="primary-link preview-dice" href="/query-4">Show Results</a>
+
               </div>
+
             </aside>
+
           </div>
+
         </div>
+
       </section>
+
     </main>
+
     <script>
+
       const queryGrid = document.querySelector(".main-grid");
+
       document.querySelectorAll(".query-card").forEach((card) => {
+
         const selectQuery = () => {
+
           queryGrid.dataset.selectedQuery = card.dataset.query;
+
         };
+
         card.addEventListener("mouseenter", selectQuery);
+
         card.addEventListener("focus", selectQuery);
+
       });
+
     </script>
+
   </body>
+
 </html>
+

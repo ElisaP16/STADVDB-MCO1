@@ -20,6 +20,18 @@ describe('drill-down model (mocked pool)', () => {
         const ops = drilldown.getOperations();
         assert.ok(ops.some((o) => o.id === 'year_to_quarter'));
         assert.ok(ops.some((o) => o.id === 'month_to_day'));
+        assert.ok(ops.some((o) => o.id === 'region' && o.label === 'Region'));
+    });
+
+    it('executes region aggregation SQL grouped by region', async () => {
+        db.pool.query = async (sql) => {
+            assert.match(sql, /GROUP BY d\.region/);
+            assert.match(sql, /ORDER BY number_of_transactions DESC/);
+            return [[{ region: 'North', number_of_transactions: '42' }]];
+        };
+        const result = await drilldown.run('region');
+        assert.equal(result.rows[0].region, 'North');
+        assert.equal(result.rows[0].number_of_transactions, 42);
     });
 
     it('executes year → quarter SQL with quarter in GROUP BY', async () => {
@@ -98,7 +110,8 @@ describe('drill-down page', () => {
     it('renders setup controls and empty state', async () => {
         const res = await request(app).get('/query-2');
         assert.equal(res.status, 200);
-        assert.match(res.text, /Drill-down operation/);
+        assert.match(res.text, /Operation Granularity/);
+        assert.match(res.text, />Region</);
         assert.match(res.text, /Time hierarchy ready/);
     });
 

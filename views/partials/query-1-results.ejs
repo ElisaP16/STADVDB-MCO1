@@ -1,0 +1,61 @@
+<%
+  queryCategory = typeof queryCategory !== 'undefined' ? queryCategory : 'location';
+  locationLevel = typeof locationLevel !== 'undefined' ? locationLevel : null;
+  periodLevel = typeof periodLevel !== 'undefined' ? periodLevel : null;
+  columns = typeof columns !== 'undefined' ? columns : [];
+%>
+<% const isNumericColumn = (col) => col === 'number_of_transactions'; %>
+<% const cols = columns && columns.length ? columns : Object.keys(rows[0]); %>
+<div class="results-wrap" id="results-table-wrap">
+  <% if (queryCategory === 'location' && locationLevel === 'district') { %>
+    <p class="results-level-label">Query results — District level</p>
+  <% } else if (queryCategory === 'period' && periodLevel === 'quarter') { %>
+    <p class="results-level-label">Query results — Quarter level</p>
+  <% } else if (queryCategory === 'period' && periodLevel === 'month') { %>
+    <p class="results-level-label">Query results — Month level</p>
+  <% } %>
+  <div class="results-scroll">
+    <table class="results-table" id="results-table">
+      <thead>
+        <tr>
+          <% cols.forEach(c => { %>
+            <th class="<%= isNumericColumn(c) ? 'num' : '' %>"><%= c.replace(/_/g, ' ') %></th>
+          <% }) %>
+        </tr>
+      </thead>
+      <tbody>
+        <% rows.forEach(r => { %>
+          <tr>
+            <% cols.forEach(c => { %>
+              <% const val = r[c]; %>
+              <% const isNum = isNumericColumn(c) || (typeof val === 'number' && c !== 'year' && c !== 'day'); %>
+              <td class="<%= isNum ? 'num' : '' %>"><%= isNum ? val.toLocaleString() : val %></td>
+            <% }) %>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% if (queryCategory === 'location' && locationLevel === 'region') { %>
+    <div class="olap-results-footer">
+      <button type="button" class="olap-level-action" id="location-drill-btn">Drill-Down Region->District</button>
+    </div>
+  <% } else if (queryCategory === 'location' && locationLevel === 'district') { %>
+    <div class="olap-results-footer">
+      <button type="button" class="olap-level-action" id="location-rollup-btn">Roll-Up District->Region</button>
+    </div>
+  <% } else if (queryCategory === 'period' && periodLevel === 'year') { %>
+    <div class="olap-results-footer">
+      <button type="button" class="olap-level-action" id="period-drill-year-btn">Drill-down Year->Quarter</button>
+    </div>
+  <% } else if (queryCategory === 'period' && periodLevel === 'quarter') { %>
+    <div class="olap-results-footer olap-results-footer--split">
+      <button type="button" class="olap-level-action" id="period-drill-quarter-btn">Drill-down Quarter->Month</button>
+      <button type="button" class="olap-level-action" id="period-rollup-quarter-btn">Roll-up Quarter->Year</button>
+    </div>
+  <% } else if (queryCategory === 'period' && periodLevel === 'month') { %>
+    <div class="olap-results-footer">
+      <button type="button" class="olap-level-action" id="period-rollup-month-btn">Roll-up Month->Quarter</button>
+    </div>
+  <% } %>
+</div>

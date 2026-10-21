@@ -75,27 +75,32 @@ ORDER BY p.year, p.quarter, p.month, p.day`;
 
 const OPERATIONS = {
     year: {
-        label: 'Year (summary)',
+        label: 'Year',
         description: 'Top-level yearly transaction totals.',
         sql: YEAR_SQL,
     },
     year_to_quarter: {
-        label: 'Year → Quarter',
+        label: 'Quarter',
         description: 'Break yearly totals down by quarter.',
         sql: YEAR_TO_QUARTER_SQL,
     },
     quarter_to_month: {
-        label: 'Quarter → Month',
+        label: 'Month',
         description: 'Break quarters down by month.',
         sql: QUARTER_TO_MONTH_SQL,
     },
     month_to_day: {
-        label: 'Month → Day',
+        label: 'Day',
         description: 'Break months down to individual days and weekdays.',
         sql: MONTH_TO_DAY_SQL,
     },
+    region: {
+        label: 'Region',
+        description: 'Regional transaction totals.',
+        sql: REGION_SQL,
+    },
     region_to_district: {
-        label: 'Region → District',
+        label: 'District',
         description: 'Break regional totals down to district level.',
         sql: DISTRICT_SQL,
     },
