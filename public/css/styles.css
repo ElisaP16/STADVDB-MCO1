@@ -126,21 +126,6 @@ h1 {
   font-size: 11px;
   line-height: 1.5;
 }
-.metadata {
-  margin-top: auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #8d9690;
-  font-size: 9px;
-}
-.tag {
-  padding: 3px 6px;
-  border-radius: 4px;
-  color: #70462d;
-  background: #f1e6dc;
-  font-weight: 600;
-}
 .preview {
   position: sticky;
   top: 24px;
