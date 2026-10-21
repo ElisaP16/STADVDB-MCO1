@@ -1,0 +1,30 @@
+SETUP INSTRUCTIONS
+
+Prerequisites: Node.js 18+, MySQL Server (with Workbench), Python 3
+
+1. Install dependencies
+   npm install
+
+2. Create a .env file in the project root (next to app.js):
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_USER=root (or your MySQL username)
+   DB_PASSWORD=your_mysql_password
+   DB_NAME=star_schema
+
+3. Start the app once to create the tables
+   node app.js
+   (Stop it with Ctrl+C after you see "Server running...")
+
+4. Load the data (run etl.py)
+
+   	How to run this ETL script:
+	set DB_PASS=your_mysql_password
+
+	in cmd
+		python etl.py run
+		python etl.py validate
+
+5. Run the app
+   npm start
+   Open http://localhost:3000
