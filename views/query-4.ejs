@@ -5,118 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Dice SQL query dimensions and results.">
     <title>Dice — OLAP Queries</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+      /* Move these into styles.css if you prefer */
+      .mode-toggle { display: flex; gap: 1.25rem; flex-wrap: wrap; margin: 0 0 1rem; }
+      .run-btn { margin-top: 1rem; padding: .6rem 1.25rem; font: inherit; font-weight: 600; cursor: pointer; }
+      .results-scroll { overflow-x: auto; }
+      .results-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+      .results-table th, .results-table td { padding: .5rem .75rem; text-align: left; border-bottom: 1px solid rgba(128,128,128,.3); }
+      .results-table th { text-transform: capitalize; }
+      .results-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+      [hidden] { display: none !important; }
+    </style>
   </head>
   <body>
     <main class="shell">
       <section class="workspace">
         <div class="detail-page">
-          <a class="back-link" href="index.html">← Back to all queries</a>
+          <a class="back-link" href="/">← Back to all queries</a>
           <header class="detail-heading">
             <span class="query-icon amber">&lt;/&gt;</span>
-            <div><p class="eyebrow">QUERY 4</p><h1>Dice</h1><p class="heading-copy">Filter a sub-cube by two years, two districts, and two transaction types.</p></div>
+            <div><p class="eyebrow">QUERY 4</p><h1>Dice</h1><p class="heading-copy">Filter a sub-cube by two years, two districts, and either two transaction types or two transaction purposes.</p></div>
           </header>
+
           <section class="detail-section">
-            <div class="section-heading"><span class="section-number">01</span><div><h2>Query setup</h2><p>Choose the values passed into the six placeholders.</p></div></div>
-            <div class="dice-controls">
-              <fieldset><legend>Years</legend><div class="field-row"><select aria-label="Year 1"><option>1993</option><option>1994</option><option>1995</option><option selected>1996</option><option>1997</option><option>1998</option></select><select aria-label="Year 2"><option>1993</option><option>1994</option><option>1995</option><option>1996</option><option selected>1997</option><option>1998</option></select></div></fieldset>
-              <fieldset>
-              <legend>Districts</legend>
-              <div class="field-row" id="district-fields">
-              <select name="district" aria-label="District 1">
-                <option>Hl.m. Praha</option>
-                <option>Benesov</option>
-                <option>Beroun</option>
-                <option>Kladno</option>
-                <option>Kolin</option>
-                <option>Kutna Hora</option>
-                <option>Melnik</option>
-                <option>Mlada Boleslav</option>
-                <option>Nymburk</option>
-                <option>Praha - vychod</option>
-                <option>Praha - zapad</option>
-                <option>Pribram</option>
-                <option>Rakovnik</option>
-                <option>Ceske Budejovice</option>
-                <option>Cesky Krumlov</option>
-                <option>Jindrichuv Hradec</option>
-                <option>Pelhrimov</option>
-                <option>Pisek</option>
-                <option>Prachatice</option>
-                <option>Strakonice</option>
-                <option>Tabor</option>
-                <option>Domazlice</option>
-                <option>Cheb</option>
-                <option>Karlovy Vary</option>
-                <option>Klatovy</option>
-                <option>Plzen - mesto</option>
-                <option>Plzen - jih</option>
-                <option>Plzen - sever</option>
-                <option>Rokycany</option>
-                <option>Sokolov</option>
-                <option>Tachov</option>
-                <option>Ceska Lipa</option>
-                <option>Decin</option>
-                <option>Chomutov</option>
-                <option>Jablonec n. Nisou</option>
-                <option>Liberec</option>
-                <option>Litomerice</option>
-                <option>Louny</option>
-                <option>Most</option>
-                <option>Teplice</option>
-                <option>Usti nad Labem</option>
-                <option>Havlickuv Brod</option>
-                <option>Hradec Kralove</option>
-                <option>Chrudim</option>
-                <option>Jicin</option>
-                <option>Nachod</option>
-                <option>Pardubice</option>
-                <option>Rychnov nad Kneznou</option>
-                <option>Semily</option>
-                <option>Svitavy</option>
-                <option>Trutnov</option>
-                <option>Usti nad Orlici</option>
-                <option>Blansko</option>
-                <option>Brno - mesto</option>
-                <option>Brno - venkov</option>
-                <option>Breclav</option>
-                <option>Hodonin</option>
-                <option>Jihlava</option>
-                <option>Kromeriz</option>
-                <option>Prostejov</option>
-                <option>Trebic</option>
-                <option>Uherske Hradiste</option>
-                <option>Vyskov</option>
-                <option>Zlin</option>
-                <option>Znojmo</option>
-                <option>Zdar nad Sazavou</option>
-                <option>Bruntal</option>
-                <option>Frydek - Mistek</option>
-                <option>Karvina</option>
-                <option>Novy Jicin</option>
-                <option>Olomouc</option>
-                <option>Opava</option>
-                <option>Ostrava - mesto</option>
-                <option>Prerov</option>
-                <option>Sumperk</option>
-                <option>Vsetin</option>
-              </select>
+            <div class="section-heading"><span class="section-number">01</span><div><h2>Query setup</h2><p>Choose the values passed into the query placeholders.</p></div></div>
+
+            <form method="get" action="/query-4">
+              <input type="hidden" name="run" value="1">
+
+              <div class="mode-toggle" role="radiogroup" aria-label="Dice by">
+                <label><input type="radio" name="mode" value="type" <%= q.mode === 'type' ? 'checked' : '' %>> Transaction type</label>
+                <label><input type="radio" name="mode" value="ksymbol" <%= q.mode === 'ksymbol' ? 'checked' : '' %>> Transaction purpose</label>
               </div>
-              </fieldset>
-              <fieldset><legend>Transaction types</legend><div class="fixed-values"><span>Credit</span><span>Debit</span></div></fieldset>
+
+              <div class="dice-controls">
+                <fieldset><legend>Years</legend><div class="field-row">
+                  <% ['year1', 'year2'].forEach((name, i) => { %>
+                    <select name="<%= name %>" aria-label="Year <%= i + 1 %>">
+                      <% options.years.forEach(y => { %>
+                        <option <%= y === q[name] ? 'selected' : '' %>><%= y %></option>
+                      <% }) %>
+                    </select>
+                  <% }) %>
+                </div></fieldset>
+
+                <fieldset><legend>Districts</legend><div class="field-row">
+                  <% ['district1', 'district2'].forEach((name, i) => { %>
+                    <select name="<%= name %>" aria-label="District <%= i + 1 %>">
+                      <% options.districts.forEach(d => { %>
+                        <option <%= d === q[name] ? 'selected' : '' %>><%= d %></option>
+                      <% }) %>
+                    </select>
+                  <% }) %>
+                </div></fieldset>
+
+                <fieldset id="type-fieldset" <%= q.mode === 'type' ? '' : 'hidden' %>>
+                  <legend>Transaction types</legend>
+                  <div class="fixed-values"><span>Credit</span><span>Debit</span></div>
+                </fieldset>
+
+                <fieldset id="ksymbol-fieldset" <%= q.mode === 'ksymbol' ? '' : 'hidden' %>>
+                  <legend>Transaction purposes</legend>
+                  <div class="field-row">
+                    <% ['k1', 'k2'].forEach((name, i) => { %>
+                      <select name="<%= name %>" aria-label="Purpose <%= i + 1 %>">
+                        <% options.kSymbols.forEach(k => { %>
+                          <option <%= k === q[name] ? 'selected' : '' %>><%= k %></option>
+                        <% }) %>
+                      </select>
+                    <% }) %>
+                  </div>
+                </fieldset>
+              </div>
+
+              <div class="run-btn-container">
+                <button class="run-btn" type="submit">Run Query</button>
+              </div>
+            </form>
+
+            <div class="results-wrap <%= rows && rows.length ? '' : 'empty-results' %>" aria-label="Dice query results" aria-live="polite">
+              <% if (error) { %>
+                <strong>Could not load results</strong><p><%= error %></p>
+              <% } else if (rows === null) { %>
+                <span class="empty-mark">∅</span><strong>Sub-cube ready to query</strong>
+                <p>2 years · 2 districts · 2 values</p>
+              <% } else if (rows.length === 0) { %>
+                <strong>No rows</strong><p>The sub-cube is empty for these selections.</p>
+              <% } else { %>
+                <% const cols = Object.keys(rows[0]); %>
+                <div class="results-scroll"><table class="results-table">
+                  <thead><tr><% cols.forEach(c => { %><th><%= c.replace(/_/g, ' ') %></th><% }) %></tr></thead>
+                  <tbody>
+                    <% rows.forEach(r => { %>
+                      <tr><% cols.forEach(c => { %>
+                        <% const isNum = typeof r[c] === 'number' && c !== 'year'; %>
+                        <td class="<%= isNum ? 'num' : '' %>"><%= isNum ? r[c].toLocaleString() : r[c] %></td>
+                      <% }) %></tr>
+                    <% }) %>
+                  </tbody>
+                </table></div>
+              <% } %>
             </div>
-            <div class="results-wrap empty-results" aria-label="Dice query results"><span class="empty-mark">∅</span><strong>Sub-cube ready to query</strong><p>2 years · 2 districts · credit + debit</p></div>
           </section>
         </div>
       </section>
     </main>
+
     <script>
-      const districtOne = document.querySelector('[name="district"]');
-      const districtTwo = districtOne.cloneNode(true);
-      districtTwo.name = "district-2";
-      districtTwo.setAttribute("aria-label", "District 2");
-      districtTwo.value = "Brno - mesto";
-      document.querySelector("#district-fields").append(districtTwo);
+      // Show only the fieldset that belongs to the selected query
+      document.querySelectorAll('input[name="mode"]').forEach((radio) =>
+        radio.addEventListener('change', () => {
+          const isType = radio.value === 'type';
+          document.getElementById('type-fieldset').hidden = !isType;
+          document.getElementById('ksymbol-fieldset').hidden = isType;
+        })
+      );
     </script>
   </body>
 </html>

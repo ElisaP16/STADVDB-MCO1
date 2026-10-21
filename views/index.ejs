@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Explore four multidimensional SQL query patterns.">
     <title>OLAP Queries</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body>
     <main class="shell">
@@ -20,25 +20,25 @@
 
           <div class="main-grid" data-selected-query="1">
             <section class="query-list" aria-label="SQL query templates">
-              <a class="query-card rollup-card" data-query="1" href="query-1.html">
+              <a class="query-card rollup-card" data-query="1" href="/query-1">
                 <span class="query-icon violet">&lt;/&gt;</span>
                 <h2>Roll-up</h2>
                 <p>Group district-level transactions into regional totals.</p>
                 <span class="metadata"><span class="tag">Aggregation</span><span>Query 1</span><span>District → Region</span></span>
               </a>
-              <a class="query-card drill-card" data-query="2" href="query-2.html">
+              <a class="query-card drill-card" data-query="2" href="/query-2">
                 <span class="query-icon blue">&lt;/&gt;</span>
                 <h2>Drill Down</h2>
                 <p>Explore transaction totals from years down to individual weekdays.</p>
                 <span class="metadata"><span class="tag">Detail</span><span>Query 2</span><span>Year → Day</span></span>
               </a>
-              <a class="query-card slice-card" data-query="3" href="query-3.html">
+              <a class="query-card slice-card" data-query="3" href="/query-3">
                 <span class="query-icon emerald">&lt;/&gt;</span>
                 <h2>Slice</h2>
                 <p>Fix transaction type to credit or debit and inspect the remaining dimensions.</p>
                 <span class="metadata"><span class="tag">Filter</span><span>Query 3</span><span>One type</span></span>
               </a>
-              <a class="query-card dice-card" data-query="4" href="query-4.html">
+              <a class="query-card dice-card" data-query="4" href="/query-4">
                 <span class="query-icon amber">&lt;/&gt;</span>
                 <h2>Dice</h2>
                 <p>Filter a sub-cube by two years, two districts, and two transaction types.</p>
@@ -93,10 +93,10 @@
                 </div>
               </div>
               <div class="preview-footer">
-                <a class="primary-link preview-rollup" href="query-1.html">Show Results →</a>
-                <a class="primary-link preview-drill" href="query-2.html">Show Results →</a>
-                <a class="primary-link preview-slice" href="query-3.html">Show Results →</a>
-                <a class="primary-link preview-dice" href="query-4.html">Show Results →</a>
+                <a class="primary-link preview-rollup" href="query-1.html">Show Results</a>
+                <a class="primary-link preview-drill" href="query-2.html">Show Results</a>
+                <a class="primary-link preview-slice" href="query-3.html">Show Results</a>
+                <a class="primary-link preview-dice" href="query-4.html">Show Results</a>
               </div>
             </aside>
           </div>
