@@ -18,10 +18,9 @@ SELECT
 FROM trans t
 JOIN district d
 ON t.sys_district_id = d.sys_district_id
-GROUP BY
-    d.sys_district_id, 
+GROUP BY ROLLUP(
     d.region,
-    d.district_name
+    d.district_name)
 ORDER BY
     d.region,
     number_of_transactions DESC`;
@@ -44,7 +43,7 @@ SELECT
 FROM trans t
 JOIN period p
     ON t.period_id = p.period_id
-GROUP BY p.year, p.quarter
+GROUP BY ROLLUP( p.year, p.quarter)
 ORDER BY p.year, p.quarter`;
 
 const QUARTER_TO_MONTH_SQL = `
@@ -56,7 +55,7 @@ SELECT
 FROM trans t
 JOIN period p
     ON t.period_id = p.period_id
-GROUP BY p.year, p.quarter, p.month
+GROUP BY ROLLUP( p.year, p.quarter, p.month)
 ORDER BY p.year, p.quarter, p.month`;
 
 const MONTH_TO_DAY_SQL = `
@@ -70,7 +69,7 @@ SELECT
 FROM trans t
 JOIN period p
     ON t.period_id = p.period_id
-GROUP BY p.year, p.quarter, p.month, p.day, p.day_name
+GROUP BY ROLLUP( p.year, p.quarter, p.month, p.day, p.day_name)
 ORDER BY p.year, p.quarter, p.month, p.day`;
 
 const OPERATIONS = {
