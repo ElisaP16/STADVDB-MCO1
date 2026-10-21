@@ -12,6 +12,7 @@ function createApp() {
     app.use(express.static(path.join(__dirname, 'public')));
 
     app.get('/', (req, res) => res.render('index'));
+    app.use(require('./routes/slice'));
     app.use(require('./routes/dice'));
     app.use(require('./routes/rollup'));
     app.use(require('./routes/drilldown'));

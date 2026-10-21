@@ -8,7 +8,7 @@
     "dev": "node --watch app.js",
     "test": "node --test test/*.test.js",
     "test:integration": "cross-env RUN_INTEGRATION=1 node --test test/integration.db.test.js",
-    "lint": "node --check app.js && node --check config/db.js && node --check models/rollupModel.js && node --check models/drilldownModel.js && node --check controllers/rollupController.js && node --check controllers/drilldownController.js",
+    "lint": "node --check app.js && node --check config/db.js && node --check models/rollupModel.js && node --check models/drilldownModel.js && node --check models/sliceModel.js && node --check controllers/sliceController.js && node --check controllers/rollupController.js && node --check controllers/drilldownController.js",
     "build": "npm run lint"
   },
   "devDependencies": {
