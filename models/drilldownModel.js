@@ -14,16 +14,14 @@ const DISTRICT_SQL = `
 SELECT
     d.region,
     d.district_name,
-    SUM(t.num_of_transactions ) AS number_of_transactions
+    SUM(t.num_of_transactions) AS number_of_transactions
 FROM trans t
 JOIN district d
-ON t.sys_district_id = d.sys_district_id
-GROUP BY ROLLUP(
+    ON t.sys_district_id = d.sys_district_id
+GROUP BY
     d.region,
-    d.district_name)
-ORDER BY
-    d.region,
-    number_of_transactions DESC`;
+    d.district_name
+WITH ROLLUP`;
 
 const YEAR_SQL = `
 SELECT
@@ -43,8 +41,10 @@ SELECT
 FROM trans t
 JOIN period p
     ON t.period_id = p.period_id
-GROUP BY ROLLUP( p.year, p.quarter)
-ORDER BY p.year, p.quarter`;
+GROUP BY
+    p.year,
+    p.quarter
+WITH ROLLUP`;
 
 const QUARTER_TO_MONTH_SQL = `
 SELECT
@@ -55,8 +55,11 @@ SELECT
 FROM trans t
 JOIN period p
     ON t.period_id = p.period_id
-GROUP BY ROLLUP( p.year, p.quarter, p.month)
-ORDER BY p.year, p.quarter, p.month`;
+GROUP BY
+    p.year,
+    p.quarter,
+    p.month
+WITH ROLLUP`;
 
 const MONTH_TO_DAY_SQL = `
 SELECT
@@ -69,8 +72,13 @@ SELECT
 FROM trans t
 JOIN period p
     ON t.period_id = p.period_id
-GROUP BY ROLLUP( p.year, p.quarter, p.month, p.day, p.day_name)
-ORDER BY p.year, p.quarter, p.month, p.day`;
+GROUP BY
+    p.year,
+    p.quarter,
+    p.month,
+    p.day,
+    p.day_name
+WITH ROLLUP`;
 
 const OPERATIONS = {
     year: {
