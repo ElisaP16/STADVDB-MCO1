@@ -1,8 +1,11 @@
-<div class="mode-toggle olap-op-toggle" role="radiogroup" aria-label="<%= ariaLabel %>">
-  <% operations.forEach(op => { %>
-    <label>
-      <input type="radio" name="operation" value="<%= op.id %>" <%= op.id === operation ? 'checked' : '' %>>
-      <%= op.label %>
-    </label>
-  <% }) %>
-</div>
+<fieldset class="olap-op-fieldset">
+  <legend><%= legendText || ariaLabel %></legend>
+  <div class="fixed-values olap-op-values" role="radiogroup" aria-label="<%= ariaLabel %>">
+    <% operations.forEach(op => { %>
+      <label class="olap-op-choice">
+        <input type="radio" name="operation" value="<%= op.id %>" <%= op.id === operation ? 'checked' : '' %>>
+        <span><%= op.label %></span>
+      </label>
+    <% }) %>
+  </div>
+</fieldset>
