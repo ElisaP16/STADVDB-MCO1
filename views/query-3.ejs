@@ -6,6 +6,9 @@
     <meta name="description" content="Slice SQL query dimensions and results.">
     <title>Slice — OLAP Queries</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <style>
+      [hidden] { display: none !important; }
+    </style>
   </head>
   <body>
     <main class="shell">
@@ -14,19 +17,62 @@
           <a class="back-link" href="/">← Back to all queries</a>
           <header class="detail-heading">
             <span class="query-icon emerald">&lt;/&gt;</span>
-            <div><p class="eyebrow">QUERY 3</p><h1>Slice</h1><p class="heading-copy">Fix transaction type to credit or debit and inspect the remaining dimensions.</p></div>
+            <div><p class="eyebrow">QUERY 3</p><h1>Slice</h1><p class="heading-copy">Fix one dimension to a single value and inspect the remaining dimensions.</p></div>
           </header>
           <section class="detail-section">
-            <div class="section-heading"><span class="section-number">01</span><div><h2>Query setup</h2><p>Choose the transaction type passed into the query.</p></div></div>
+            <div class="section-heading"><span class="section-number">01</span><div><h2>Query setup</h2><p>Choose the dimension to slice on, then the value passed into the query.</p></div></div>
 
             <form method="get" action="/query-3" class="olap-query-form">
               <input type="hidden" name="run" value="1">
               <%- include('partials/operation-toggle', {
                 operations,
                 operation,
-                ariaLabel: 'Transaction type',
-                legendText: 'Transaction type'
+                ariaLabel: 'Slice dimension',
+                legendText: 'Slice dimension'
               }) %>
+
+              <div class="dice-controls">
+                <fieldset id="slice-period" <%= operation === 'period' ? '' : 'hidden' %>>
+                  <legend>Year</legend>
+                  <div class="field-row">
+                    <select name="year" aria-label="Year">
+                      <% options.years.forEach(y => { %>
+                        <option <%= y === q.year ? 'selected' : '' %>><%= y %></option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </fieldset>
+
+                <fieldset id="slice-location" <%= operation === 'location' ? '' : 'hidden' %>>
+                  <legend>Region</legend>
+                  <div class="field-row">
+                    <select name="region" aria-label="Region">
+                      <% options.regions.forEach(r => { %>
+                        <option <%= r === q.region ? 'selected' : '' %>><%= r %></option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </fieldset>
+
+                <fieldset id="slice-type" <%= operation === 'type' ? '' : 'hidden' %>>
+                  <legend>Transaction type</legend>
+                  <div class="field-row">
+                    <select name="transaction_type" aria-label="Transaction type">
+                      <% options.types.forEach(t => { %>
+                        <option <%= t === q.transaction_type ? 'selected' : '' %>><%= t %></option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </fieldset>
+
+                <fieldset id="slice-account" <%= operation === 'account' ? '' : 'hidden' %>>
+                  <legend>Account ID</legend>
+                  <div class="field-row">
+                    <input type="number" name="account_id" min="1" value="<%= q.account_id %>" aria-label="Account ID">
+                  </div>
+                </fieldset>
+              </div>
+
               <div class="run-btn-container">
                 <button class="run-btn" type="submit">Run Query</button>
               </div>
@@ -37,11 +83,21 @@
               columns,
               error,
               emptyTitle: 'Slice ready',
-              emptyMessage: 'Results will contain year, district name, and transaction count.'
+              emptyMessage: 'Choose a dimension and a value, then click Run Query to load data from the warehouse.'
             }) %>
           </section>
         </div>
       </section>
     </main>
+
+    <script>
+      document.querySelectorAll('input[name="operation"]').forEach((radio) =>
+        radio.addEventListener('change', () => {
+          ['period', 'location', 'type', 'account'].forEach((id) => {
+            document.getElementById('slice-' + id).hidden = id !== radio.value;
+          });
+        })
+      );
+    </script>
   </body>
 </html>
