@@ -3,36 +3,42 @@ const express = require('express');
 const path = require('path');
 const { connectDB, createTables } = require('./config/db');
 
-const app = express();
+function createApp() {
+    const app = express();
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public'))); // styles.css, images
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, 'views'));
+    app.use(express.json());
+    app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
-app.get('/', (req, res) => res.render('index'));
-app.use(require('./routes/dice'));
-// app.use(require('./routes/rollup'));   // one router per query page
-// app.use(require('./routes/drilldown'));
-// app.use(require('./routes/slice'));
+    app.get('/', (req, res) => res.render('index'));
+    app.use(require('./routes/dice'));
+    app.use(require('./routes/rollup'));
+    app.use(require('./routes/drilldown'));
 
-// 404 and error handling (the controllers pass failures here via next(err))
-app.use((req, res) => res.status(404).send('Page not found'));
-app.use((err, req, res, next) => {
-    console.error(err);
-    res.status(500).send('Something went wrong');
-});
+    app.use((req, res) => res.status(404).send('Page not found'));
+    app.use((err, req, res, next) => {
+        console.error(err);
+        res.status(500).send('Something went wrong');
+    });
 
-// Start only after the database is reachable and the schema exists
+    return app;
+}
+
 const PORT = process.env.PORT || 3000;
 
-(async () => {
-    try {
-        await connectDB();
-        await createTables();
-        app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
-    } catch (err) {
-        console.error('Startup failed:', err.message);
-        process.exit(1);
-    }
-})();
+if (require.main === module) {
+    (async () => {
+        try {
+            await connectDB();
+            await createTables();
+            const app = createApp();
+            app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+        } catch (err) {
+            console.error('Startup failed:', err.message);
+            process.exit(1);
+        }
+    })();
+}
+
+module.exports = { createApp, connectDB, createTables };

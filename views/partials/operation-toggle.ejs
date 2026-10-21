@@ -1,0 +1,8 @@
+<div class="mode-toggle olap-op-toggle" role="radiogroup" aria-label="<%= ariaLabel %>">
+  <% operations.forEach(op => { %>
+    <label>
+      <input type="radio" name="operation" value="<%= op.id %>" <%= op.id === operation ? 'checked' : '' %>>
+      <%= op.label %>
+    </label>
+  <% }) %>
+</div>

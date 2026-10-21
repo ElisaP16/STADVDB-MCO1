@@ -95,11 +95,11 @@
               <% } else { %>
                 <% const cols = Object.keys(rows[0]); %>
                 <div class="results-scroll"><table class="results-table">
-                  <thead><tr><% cols.forEach(c => { %><th><%= c.replace(/_/g, ' ') %></th><% }) %></tr></thead>
+                  <thead><tr><% cols.forEach(c => { %><th class="<%= c === 'number_of_transactions' ? 'num' : '' %>"><%= c.replace(/_/g, ' ') %></th><% }) %></tr></thead>
                   <tbody>
                     <% rows.forEach(r => { %>
                       <tr><% cols.forEach(c => { %>
-                        <% const isNum = typeof r[c] === 'number' && c !== 'year'; %>
+                        <% const isNum = c === 'number_of_transactions' || (typeof r[c] === 'number' && c !== 'year'); %>
                         <td class="<%= isNum ? 'num' : '' %>"><%= isNum ? r[c].toLocaleString() : r[c] %></td>
                       <% }) %></tr>
                     <% }) %>

@@ -18,7 +18,7 @@ from sqlalchemy import create_engine, text
 # These are for connecting to the source and warehouse databases. 
 # They can be set as environment variables or will default to the values below.
 USER = os.getenv("DB_USER", "root")
-PASS = os.getenv("DB_PASS", "yehey123")
+PASS = os.getenv("DB_PASS", "WhoNeedsThumbs?!2006")
 HOST = os.getenv("DB_HOST", "localhost")
 PORT = os.getenv("DB_PORT", "3306")
 SRC_DB = os.getenv("SOURCE_DB", "financedata")

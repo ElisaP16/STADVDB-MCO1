@@ -5,38 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Drill Down SQL query dimensions and results.">
     <title>Drill Down — OLAP Queries</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body>
     <main class="shell">
       <section class="workspace">
         <div class="detail-page">
-          <a class="back-link" href="index.html">← Back to all queries</a>
+          <a class="back-link" href="/">← Back to all queries</a>
           <header class="detail-heading">
             <span class="query-icon blue">&lt;/&gt;</span>
             <div><p class="eyebrow">QUERY 2</p><h1>Drill Down</h1><p class="heading-copy">Explore transaction totals from years down to individual weekdays.</p></div>
           </header>
           <section class="detail-section">
-            <div class="section-heading"><span class="section-number">01</span><div><h2>Query setup</h2><p>Choose the level of time detail.</p></div></div>
-            <div class="query-options" aria-label="Drill down level">
-              <button data-level="quarter">Year → quarter</button>
-              <button class="active" data-level="month">Quarter → month</button>
-              <button data-level="day">Month → day</button>
-            </div>
-            <div class="results-wrap empty-results"><span class="empty-mark">∅</span><strong>Month level ready</strong><p>Run the SQL against the warehouse to display the result rows here.</p></div>
+            <div class="section-heading"><span class="section-number">01</span><div><h2>Query setup</h2><p>Choose the level of time detail, then run the predefined SQL.</p></div></div>
+
+            <form method="get" action="/query-2" class="olap-query-form">
+              <input type="hidden" name="run" value="1">
+              <%- include('partials/operation-toggle', {
+                operations,
+                operation,
+                ariaLabel: 'Drill-down operation'
+              }) %>
+              <div class="run-btn-container">
+                <button class="run-btn" type="submit">Run Query</button>
+              </div>
+            </form>
+
+            <%- include('partials/results-table', {
+              rows,
+              columns,
+              error,
+              emptyTitle: 'Time hierarchy ready',
+              emptyMessage: 'Choose a drill-down level and click Run Query to load data from the warehouse.'
+            }) %>
           </section>
         </div>
       </section>
     </main>
-    <script>
-      const levelButtons = document.querySelectorAll(".query-options button");
-      const levelOutput = document.querySelector(".empty-results strong");
-      levelButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          levelButtons.forEach((item) => item.classList.toggle("active", item === button));
-          levelOutput.textContent = `${button.dataset.level[0].toUpperCase()}${button.dataset.level.slice(1)} level ready`;
-        });
-      });
-    </script>
   </body>
 </html>

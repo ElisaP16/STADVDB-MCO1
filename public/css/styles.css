@@ -683,6 +683,12 @@ pre {
   height: 10px;
   cursor: pointer;
 }
+.mode-toggle.olap-op-toggle {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: 0 0 1rem;
+}
 .run-btn {
   background-color: #e9eee3;
   width: 866px;
@@ -691,4 +697,47 @@ pre {
   justify-content: center;
   align-items: center;
   font-size: 13px !important;
+  border: none;
+  cursor: pointer;
+}
+.olap-query-form {
+  margin-bottom: 1.25rem;
+}
+.olap-query-form select {
+  display: block;
+  width: 100%;
+  max-width: 866px;
+  margin-top: 0.35rem;
+  padding: 0.45rem 0.6rem;
+  font: inherit;
+}
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+.run-btn-container {
+  margin-top: 1rem;
+}
+.results-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+.results-table th,
+.results-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+.results-table th {
+  text-transform: capitalize;
+}
+.results-table th.num,
+.results-table td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }

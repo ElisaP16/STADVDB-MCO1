@@ -1,0 +1,38 @@
+<% const isNumericColumn = (col) => col === 'number_of_transactions'; %>
+<div class="results-wrap <%= rows && rows.length ? '' : 'empty-results' %>" aria-live="polite">
+  <% if (error) { %>
+    <strong>Could not load results</strong>
+    <p><%= error %></p>
+  <% } else if (rows === null) { %>
+    <span class="empty-mark">∅</span>
+    <strong><%= emptyTitle || 'Query ready' %></strong>
+    <p><%= emptyMessage || 'Choose an operation and click Run Query to load data from the warehouse.' %></p>
+  <% } else if (rows.length === 0) { %>
+    <strong>No rows</strong>
+    <p>The query returned no data for the current selection.</p>
+  <% } else { %>
+    <% const cols = columns && columns.length ? columns : Object.keys(rows[0]); %>
+    <div class="results-scroll">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <% cols.forEach(c => { %>
+              <th class="<%= isNumericColumn(c) ? 'num' : '' %>"><%= c.replace(/_/g, ' ') %></th>
+            <% }) %>
+          </tr>
+        </thead>
+        <tbody>
+          <% rows.forEach(r => { %>
+            <tr>
+              <% cols.forEach(c => { %>
+                <% const val = r[c]; %>
+                <% const isNum = isNumericColumn(c) || (typeof val === 'number' && c !== 'year' && c !== 'day'); %>
+                <td class="<%= isNum ? 'num' : '' %>"><%= isNum ? val.toLocaleString() : val %></td>
+              <% }) %>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>
